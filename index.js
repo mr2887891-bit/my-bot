@@ -1,16 +1,20 @@
 const TelegramBot = require('node-telegram-bot-api');
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+
 const token = '8346732184:AAGPeMccWPgO8HSuD2IjMTH3o8hvYY360w4';
+const genAI = new GoogleGenerativeAI("AIzaSyBPFtxZFojNyKGvgVu-8cSKbDZacG_WAlY");
 const bot = new TelegramBot(token, {polling: true});
 
-bot.on('message', (msg) => {
+bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
-    const text = msg.text ? msg.text.toLowerCase() : "";
+    const text = msg.text;
 
-    if (text === '/start') {
-        bot.sendMessage(chatId, "রাহাত ভাই, আমি এখন প্রস্তুত! আপনার যেকোনো নির্দেশ পালন করতে পারব।");
-    } else if (text.includes("video banaw")) {
-        bot.sendMessage(chatId, "রাহাত ভাই, ভিডিও বানানোর জন্য আমার একটি বিশেষ AI টুল লাগবে। আমি সেটি সেটআপ করার চেষ্টা করছি!");
-    } else {
-        bot.sendMessage(chatId, "আপনি বলেছেন: " + msg.text + "\nআমি আপনার জন্য এটি নিয়ে কাজ করছি!");
+    try {
+        const model = genAI.getGenerativeModel({ model: "gemini-pro"});
+        const result = await model.generateContent(text);
+        const response = await result.response;
+        bot.sendMessage(chatId, response.text());
+    } catch (error) {
+        bot.sendMessage(chatId, "রাহাত ভাই, একটু সমস্যা হচ্ছে। আমি ঠিক করার চেষ্টা করছি!");
     }
 });
