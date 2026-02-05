@@ -1,8 +1,12 @@
 {
-  "name": "rahat-bot",
+  "name": "my-bot",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
-    "telegraf": "^4.12.0"
+    "node-telegram-bot-api": "^0.64.0"
   }
 }
