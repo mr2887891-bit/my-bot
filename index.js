@@ -1,18 +1,16 @@
 const TelegramBot = require('node-telegram-bot-api');
-
-// আপনার বটের টোকেন
 const token = '8346732184:AAGPeMccWPgO8HSuD2IjMTH3o8hvYY360w4';
 const bot = new TelegramBot(token, {polling: true});
 
 bot.on('message', (msg) => {
     const chatId = msg.chat.id;
-    const text = msg.text.toLowerCase();
+    const text = msg.text ? msg.text.toLowerCase() : "";
 
     if (text === '/start') {
-        bot.sendMessage(chatId, "রাহাত ভাই, আমি প্রস্তুত! আপনি যা বলবেন আমি তাই করার চেষ্টা করব।");
+        bot.sendMessage(chatId, "রাহাত ভাই, আমি এখন প্রস্তুত! আপনার যেকোনো নির্দেশ পালন করতে পারব।");
     } else if (text.includes("video banaw")) {
-        bot.sendMessage(chatId, "রাহাত ভাই, আমি ভিডিও বানানোর প্রসেস শুরু করছি। (এটি একটি অ্যাডভান্স কাজ, আমি ধাপে ধাপে শিখছি)");
+        bot.sendMessage(chatId, "রাহাত ভাই, ভিডিও বানানোর জন্য আমার একটি বিশেষ AI টুল লাগবে। আমি সেটি সেটআপ করার চেষ্টা করছি!");
     } else {
-        bot.sendMessage(chatId, "আপনি বললেন: " + msg.text + "\nআমি আপনার নির্দেশ পালনের জন্য তৈরি হচ্ছি!");
+        bot.sendMessage(chatId, "আপনি বলেছেন: " + msg.text + "\nআমি আপনার জন্য এটি নিয়ে কাজ করছি!");
     }
 });
